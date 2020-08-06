@@ -6,10 +6,9 @@ const port = 3000;
 const server = http.createServer(router.handle);
 
 // Utils
-function sendErrorResponse (response) {
+function sendError (response) {
     response.writeHead(404, { 'Content-Type': 'text/html'  });
-    response.write('<h1>File not found</h1>');
-    response.end();
+    response.end('<h1>File not found</h1>');
 }
 
 function readFile (path, response) {
@@ -17,14 +16,13 @@ function readFile (path, response) {
         fs.readFile(path, (error, content) => {
             if (error) {
                 console.log(error);
-                sendErrorResponse(response);
+                sendError(response);
                 return;
             }
-            response.write(content);
-            response.end();
+            response.end(content);
         });
     } else {
-        sendErrorResponse(response);
+        sendError(response);
     }
 }
 
@@ -45,7 +43,6 @@ router.get('/Gallery.js', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     readFile(`./public/scripts/Gallery.js`, res);
 });
-
 router.post('/', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('posted!');
