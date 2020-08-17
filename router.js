@@ -14,7 +14,7 @@ exports.handle = (req, res) => {
             routes[req.method][req.url](req, res);
         } else {
             res.writeHead(404, { 'Content-Type': 'text.html' });
-            res.end("<h1>No such file exists</h1>");
+            res.end("<h1>File not found</h1>");
         }
     } catch (ex) {
         console.log(`error: ${ex}`);
