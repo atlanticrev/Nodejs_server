@@ -1,1 +1,0 @@
-exports.messages = ['hello', 'bye', 'yahoo!'];

@@ -1,3 +1,6 @@
+const contentTypes = require('./contentTypes');
+const utils = require('./utils');
+
 const routes = {
     'GET': {
         '/info': (req, res) => {
@@ -10,17 +13,14 @@ const routes = {
 
 exports.handle = (req, res) => {
     try {
-        if (routes[req.method][req.url]) {
-            routes[req.method][req.url](req, res);
-        } else {
-            res.writeHead(404, { 'Content-Type': 'text.html' });
-            res.end("<h1>File not found</h1>");
-        }
+        routes[req.method][req.url](req, res);
     } catch (ex) {
-        console.log(`error: ${ex}`);
+        res.writeHead(200, contentTypes['html']);
+        utils.getFile('views/error.html', res);
     }
 };
 
+// Register routes
 exports.get = (url, action) => {
     routes['GET'][url] = action;
 };
