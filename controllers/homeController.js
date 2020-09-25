@@ -17,3 +17,8 @@ exports.logQueryPath = (req, res, next) => {
     console.log(`Request made to: ${req.url}`);
     next();
 };
+
+exports.respondWithName = (req, res) => {
+    // let name = req.params['nameVar'];
+    res.render('index', {name});
+};
