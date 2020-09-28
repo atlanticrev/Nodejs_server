@@ -17,15 +17,13 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(homeController.logQueryPath);
-// Ejs
-app.use(layouts);
+app.use(layouts); // ejs
 app.use(errorController.logErrors);
 
 // Routes
 app.get('/', homeController.sendQuery);
 app.get('/fruits/:fruit', homeController.sendReqParam);
 app.post('/', homeController.sendPostSuccess);
-
 app.get('/name/:nameVar', homeController.respondWithName);
 app.get('/contact', contactController.respondWithContact);
 app.get('/courses', coursesController.respondWithCourses);
