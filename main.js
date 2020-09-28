@@ -19,17 +19,20 @@ app.use(express.json());
 app.use(homeController.logQueryPath);
 app.use(layouts); // ejs
 app.use(errorController.logErrors);
+app.use(express.static('public'));
 
 // Routes
 app.get('/', homeController.sendQuery);
-app.get('/fruits/:fruit', homeController.sendReqParam);
 app.post('/', homeController.sendPostSuccess);
+app.get('/fruits/:fruit', homeController.sendReqParam);
 app.get('/name/:nameVar', homeController.respondWithName);
 app.get('/contact', contactController.respondWithContact);
 app.get('/courses', coursesController.respondWithCourses);
 
 // Errors
 app.use(errorController.logErrors);
+app.use(errorController.respondNoResourceFound);
+app.use(errorController.respondInternalError);
 
 // Start server
 app.listen(app.get('port'), () => console.log(`Express server has started and is listening on port number: ${app.get('port')}`));

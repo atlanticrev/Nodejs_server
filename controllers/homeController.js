@@ -10,7 +10,7 @@ exports.sendPostSuccess = (req, res) => {
 
 exports.sendQuery = (req, res) => {
     console.log('Query:', req.query);
-    res.send('Hello, Universe');
+    res.render('landing');
 };
 
 exports.logQueryPath = (req, res, next) => {
