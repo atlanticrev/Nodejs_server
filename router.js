@@ -1,30 +1,33 @@
-const contentTypes = require('./contentTypes');
 const utils = require('./utils');
+const contentTypes = require('./contentTypes');
 
-const routes = {
-    'GET': {
-        '/info': (req, res) => {
-            res.writeHead(200, { 'Content-Type': 'text.plain' });
-            res.end("Welcome to the Info Page!");
-        }
-    },
-    'POST': {}
-};
+class Router {
 
-exports.handle = (req, res) => {
-    try {
-        routes[req.method][req.url](req, res);
-    } catch (ex) {
-        res.writeHead(200, contentTypes['html']);
-        utils.getFile('views/error.html', res);
+    constructor () {
+        this.routes = {
+            'GET': {},
+            'POST': {}
+        };
     }
-};
 
-// Register routes
-exports.get = (url, action) => {
-    routes['GET'][url] = action;
-};
+    handleRoute = (req, res) => {
+        const { method, url } = req;
+        try {
+            this.routes[method][url](req, res);
+        } catch (e) {
+            res.writeHead(200, contentTypes['html']);
+            utils.getFile('views/404.html', res);
+        }
+    };
 
-exports.post = (url, action) => {
-    routes['POST'][url] = action;
-};
+    get = (url, action) => {
+        this.routes['GET'][url] = action;
+    };
+
+    post = (url, action) => {
+        this.routes['POST'][url] = action;
+    };
+
+}
+
+module.exports = new Router();
